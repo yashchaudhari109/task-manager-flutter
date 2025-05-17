@@ -6,6 +6,7 @@ import 'dart:isolate';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:path_provider/path_provider.dart';
 
 typedef ApiCall<T> = Future<Response<T>> Function();
@@ -199,6 +200,7 @@ class ApiService {
 
   // Entry point for isolate download
   static Future<void> _downloadEntryPoint(_DownloadParams params) async {
+    String yash;
     final dio = Dio();
     final response = await dio.download(
       params.url,
@@ -206,6 +208,9 @@ class ApiService {
       onReceiveProgress: params.onReceiveProgress,
       deleteOnError: true,
     );
+    if (kDebugMode) {
+      print(response);
+    }
 
     params.sendPort.send(File(params.savePath));
   }
