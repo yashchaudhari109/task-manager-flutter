@@ -200,7 +200,7 @@ class ApiService {
 
   // Entry point for isolate download
   static Future<void> _downloadEntryPoint(_DownloadParams params) async {
-    String yash;
+    Null yash = null;
     final dio = Dio();
     final response = await dio.download(
       params.url,
